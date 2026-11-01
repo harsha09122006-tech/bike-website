@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NOCTIS electric motorcycles. When the city goes dark, the light is yours. Discover the Meteor 350, S, X, R, and ONE — five ways to drive the night." />
+  <title>NOCTIS — Drive the Night</title>
+
+  <link rel="preload" as="image" href="bike%20image.png" type="image/png" fetchpriority="high" media="(prefers-reduced-motion: reduce)" />
+  <link rel="preload" as="image" href="assets/frames/hero/frame_0001.webp" type="image/webp" fetchpriority="high" media="(prefers-reduced-motion: no-preference) and (min-width: 768px)" />
+  <link rel="preload" as="image" href="assets/frames/hero-mobile/frame_0001.webp" type="image/webp" fetchpriority="high" media="(prefers-reduced-motion: no-preference) and (max-width: 767px)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════ FALLBACK (no-JavaScript) ═══════════════ -->
+  <noscript>
+    <style>
+      #preloader, #grain, #cursor-dot, #cursor-ring, #cursor-bar, #cursor-label, #nav, #nav-hamburger, #nav-close { display: none !important; }
+      #noscript-section-hero, #noscript-section-statement, #noscript-section-dismantle, #noscript-section-lineup, #noscript-section-reserve, #noscript-footer { display: block !important; }
+    </style>
+    <section id="noscript-section-hero" style="height:auto;padding:20px;">
+      <p style="text-align:center;font-family:Inter,sans-serif;">NOCTIS — Drive the Night (static view, JavaScript required for scroll experience)</p>
+    </section>
+    <section id="noscript-section-statement" style="height:auto;padding:20px;text-align:center;">
+      <p style="font-family:Archivo,sans-serif;font-size:2rem;">02 — Engineering</p>
+      <p style="font-family:Archivo,sans-serif;font-size:1.5rem;">Every part was designed to disappear into one line of light.</p>
+    </section>
+    <section id="noscript-section-dismantle" style="height:auto;padding:20px;">
+      <h2 style="font-family:Archivo,sans-serif;font-size:1.5rem;">Look closer.</h2>
+    </section>
+    <section id="noscript-section-lineup" style="height:auto;padding:20px;">
+      <p style="font-family:Archivo,sans-serif;font-size:1.5rem;">03 — The Lineup</p>
+      <p style="font-family:Archivo,sans-serif;font-size:1.2rem;">Five ways to ride the night.</p>
+    </section>
+    <section id="noscript-section-reserve" style="height:auto;padding:20px;text-align:center;">
+      <h2 style="font-family:Archivo,sans-serif;font-size:1.5rem;">Ride the night.</h2>
+      <p style="font-family:Inter,sans-serif;">The city was never meant to be dark. You were meant to set it alight.</p>
+      <p>Reservation requests require JavaScript and a configured booking service.</p>
+    </section>
+    <footer id="noscript-footer" style="border-top:1px solid rgba(237,234,228,0.12);padding:20px;">
+      <p style="text-align:center;">NOCTIS © 2026. Fictional brand.</p>
+    </footer>
+  </noscript>
+
+  <!-- ═══════════════ PRELOADER ═══════════════ -->
+  <div id="preloader" role="status" aria-label="Loading NOCTIS">
+    <span id="preloader-wordmark" aria-hidden="true">NOCTIS</span>
+    <div id="preloader-line-wrap" aria-hidden="true">
+      <div id="preloader-line-fill"></div>
+    </div>
+    <span id="preloader-counter" aria-live="polite">000</span>
+    <span id="preloader-status">Loading frames…</span>
+  </div>
+
+  <!-- ═══════════════ FILM GRAIN OVERLAY ═══════════════ -->
+  <canvas id="grain" aria-hidden="true"></canvas>
+
+  <!-- ═══════════════ CUSTOM CURSOR (headlight) ═══════════════ -->
+  <div id="cursor-dot"   aria-hidden="true"></div>
+  <div id="cursor-ring"  aria-hidden="true"></div>
+  <div id="cursor-bar"   aria-hidden="true"></div>
+  <div id="cursor-label" aria-hidden="true"></div>
+
+  <!-- ═══════════════ NAVIGATION ═══════════════ -->
+  <nav id="nav" aria-label="Main navigation">
+    <a href="#section-hero" id="nav-wordmark" aria-label="NOCTIS home">NOCTIS</a>
+    <ul id="nav-links">
+      <li><a href="#section-lineup"   id="nav-models">Models</a></li>
+      <li><a href="#section-dismantle" id="nav-tech">Technology</a></li>
+      <li><a href="#section-reserve"  id="nav-reserve">Reserve</a></li>
+    </ul>
+    <button id="nav-hamburger" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <button id="nav-close" class="nav-close" aria-label="Close menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ═══════════════ SECTION 1 — HERO ═══════════════ -->
+  <section id="section-hero" aria-label="Hero — NOCTIS electric motorcycle">
+    <div class="pin-wrap" id="hero-pin-wrap">
+      <div class="pin-stage" id="hero-stage">
+        <canvas class="frame-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="progress-line" id="hero-progress-line" aria-hidden="true"></div>
+
+        <div class="hero-chapter" id="ch-1" aria-hidden="true">
+          <h1 class="display"><span class="line-reveal"><span class="line-reveal-inner">NOCTIS</span></span></h1>
+          <p class="hud-text" style="margin-top:20px;color:var(--fog);">
+            <span class="line-reveal"><span class="line-reveal-inner">The city is asleep.</span></span>
+          </p>
+          <div class="scroll-hint" aria-hidden="true">
+            <span class="scroll-hint-label">Scroll or move to wake it</span>
+            <span class="scroll-hint-line"></span>
+          </div>
+        </div>
+
+        <div class="hero-chapter" id="ch-2" aria-hidden="true">
+          <h2 class="display" style="font-size:clamp(28px,5vw,80px);line-height:1.05;">
+            <span class="line-reveal"><span class="line-reveal-inner">It doesn't need</span></span>
+            <span class="line-reveal"><span class="line-reveal-inner">the city's light.</span></span>
+          </h2>
+        </div>
+
+        <div class="hero-chapter" id="ch-3" aria-hidden="true">
+          <h2 class="display" style="font-size:clamp(28px,5vw,80px);line-height:1.05;">
+            <span class="line-reveal"><span class="line-reveal-inner">It brings</span></span>
+            <span class="line-reveal"><span class="line-reveal-inner">its own.</span></span>
+          </h2>
+        </div>
+
+        <div class="hero-chapter" id="ch-4" aria-hidden="true">
+          <h2 class="display" style="font-size:clamp(36px,5vw,96px);line-height:0.95;">
+            <span class="line-reveal"><span class="line-reveal-inner">Meteor 350</span></span>
+          </h2>
+          <div class="spec-row" style="margin-top:16px;">
+            <span class="spec-item">0–100 KM/H 2.8S</span>
+            <span class="spec-item">380 KM RANGE</span>
+            <span class="spec-item">MID-DRIVE MOTOR</span>
+          </div>
+          <a href="#section-lineup" class="text-link" id="hero-discover-link">Discover the Meteor 350</a>
+        </div>
+
+        <aside id="hero-hud" aria-label="Ride telemetry">
+          <div class="hud-chapter" id="hud-ch" aria-live="polite">
+            <span class="hud-chapter-tick" aria-hidden="true"></span>
+            <span id="hud-ch-num">01 / 04</span>
+          </div>
+          <div class="hud-stats" aria-hidden="true">
+            <span class="hud-stat-label">Speed</span>
+            <span class="hud-stat-value"><span id="hud-speed">000</span> KM/H</span>
+            <span class="hud-stat-label" style="margin-top:8px;">Distance</span>
+            <span class="hud-stat-value"><span id="hud-dist">0.0</span> KM</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SECTION 2 — STATEMENT ═══════════════ -->
+  <section id="section-statement" aria-label="Engineering statement">
+    <p class="section-label">02 — Engineering</p>
+    <p class="statement-text" id="statement-words" aria-label="Every part was designed to disappear into one line of light."></p>
+  </section>
+
+  <!-- ═══════════════ SECTION 3 — DISMANTLE ═══════════════ -->
+  <section id="section-dismantle" aria-label="Technology — dismantle sequence">
+    <div class="pin-wrap" id="dismantle-pin-wrap">
+      <div class="pin-stage" id="dismantle-stage">
+        <canvas class="frame-canvas" id="dismantle-canvas" aria-hidden="true"></canvas>
+        <div class="progress-line" id="dismantle-progress-line" aria-hidden="true"></div>
+
+        <h2 class="section-title" aria-label="Look closer.">
+          <span class="line-reveal"><span class="line-reveal-inner">Look closer.</span></span>
+        </h2>
+
+        <div class="callout" id="co-frame" role="note" aria-label="Frame — Carbon composite trellis frame">
+          <div class="callout-dot"></div>
+          <div class="callout-line" aria-hidden="true"></div>
+          <div class="callout-content">
+            <span class="callout-label">Frame</span>
+            <span class="callout-desc">Carbon composite trellis frame</span>
+          </div>
+        </div>
+
+        <div class="callout" id="co-battery" role="note" aria-label="Battery — 24 kWh structural battery pack">
+          <div class="callout-dot"></div>
+          <div class="callout-line" aria-hidden="true"></div>
+          <div class="callout-content">
+            <span class="callout-label">Battery</span>
+            <span class="callout-desc">24 kWh structural battery pack</span>
+          </div>
+        </div>
+
+        <div class="callout" id="co-drive" role="note" aria-label="Drive — High-torque axial-flux motor, 160 kW">
+          <div class="callout-dot"></div>
+          <div class="callout-line" aria-hidden="true"></div>
+          <div class="callout-content">
+            <span class="callout-label">Drive</span>
+            <span class="callout-desc">High-torque axial-flux motor, 160 kW</span>
+          </div>
+        </div>
+
+        <div class="callout" id="co-light" role="note" aria-label="Light — Single-line LED signature">
+          <div class="callout-dot"></div>
+          <div class="callout-line" aria-hidden="true"></div>
+          <div class="callout-content">
+            <span class="callout-label">Light</span>
+            <span class="callout-desc">Single-line LED signature</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ METEOR 350 — INTERACTIVE ENGINEERING VIEW ═══════════════ -->
+  <section id="meteor-engineering" aria-labelledby="meteor-title">
+    <div class="meteor-header">
+      <p class="section-label">Royal Enfield / Engineering study</p>
+      <div class="meteor-heading">
+        <div>
+          <h2 class="meteor-title" id="meteor-title">Meteor <span>350</span></h2>
+          <p class="meteor-intro">A closer look at the shape, craft and mechanical character.</p>
+        </div>
+        <p class="meteor-model-note">349 cc<br />single-cylinder</p>
+      </div>
+    </div>
+
+    <div class="meteor-showcase">
+      <div class="meteor-stage" id="meteor-stage">
+        <svg
+          class="meteor-art"
+          id="meteor-exploded-view"
+          viewBox="0 100 1010 760"
+          role="img"
+          aria-labelledby="meteor-art-title meteor-art-description"
+        >
+          <title id="meteor-art-title">Royal Enfield Meteor 350 interactive exploded view</title>
+          <desc id="meteor-art-description">
+            A softly focused Meteor 350 separates into its wheels, fuel tank, engine,
+            chassis, suspension, exhaust and lighting when explored.
+          </desc>
+          <defs>
+            <path id="meteor-shape-tank" d="M432 319 C461 297 504 292 557 301 L623 314 Q662 323 673 365 L669 405 Q650 436 606 443 L503 435 Q465 425 441 404 Q421 374 432 319Z" />
+            <path id="meteor-shape-seat" d="M231 349 Q245 361 281 365 L416 353 Q444 357 459 389 Q461 410 434 423 L313 436 Q277 433 243 411 L217 390Z" />
+            <path id="meteor-shape-engine" d="M409 426 Q448 410 492 422 L589 424 Q623 439 619 480 L604 538 Q586 556 553 556 L459 555 Q432 542 417 509Z" />
+            <path id="meteor-shape-frame" d="M254 428 L411 416 L448 438 L383 477 L288 550 L266 532 L351 467 L252 456Z" />
+            <path id="meteor-shape-exhaust" d="M91 591 C124 584 238 590 348 610 L507 625 Q565 632 586 648 L574 670 Q532 673 466 659 L292 642 Q173 627 96 627Z" />
+            <circle id="meteor-shape-rear-wheel" cx="153" cy="590" r="122" />
+            <circle id="meteor-shape-front-wheel" cx="820" cy="585" r="133" />
+            <path id="meteor-shape-rear-shock" d="M245 444 L270 449 L342 563 L330 579 L253 481Z" />
+            <path id="meteor-shape-fork" d="M666 353 L704 358 L782 556 L763 570 L705 455 L653 423Z" />
+            <path id="meteor-shape-headlamp" d="M674 250 Q711 236 751 259 L777 301 L762 350 L717 365 L680 335Z" />
+            <path id="meteor-shape-front-fender" d="M678 454 Q716 430 777 439 Q837 446 877 473 L862 495 Q810 469 775 468 Q727 466 690 487Z" />
+            <path id="meteor-shape-rear-fender" d="M26 371 Q94 341 202 347 Q251 353 280 381 L267 414 Q213 381 167 380 Q91 378 43 421Z" />
+            <path id="meteor-shape-handlebar" d="M575 214 Q598 205 617 220 L665 248 L711 247 Q742 251 763 273 L754 290 Q722 275 690 279 L649 271 L601 247Z" />
+
+            <mask id="meteor-assembly-mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="100" width="1010" height="760">
+              <rect x="0" y="100" width="1010" height="760" fill="white" />
+              <g fill="black">
+                <use href="#meteor-shape-tank" />
+                <use href="#meteor-shape-seat" />
+                <use href="#meteor-shape-engine" />
+                <use href="#meteor-shape-frame" />
+                <use href="#meteor-shape-exhaust" />
+                <use href="#meteor-shape-rear-wheel" />
+                <use href="#meteor-shape-front-wheel" />
+                <use href="#meteor-shape-rear-shock" />
+                <use href="#meteor-shape-fork" />
+                <use href="#meteor-shape-headlamp" />
+                <use href="#meteor-shape-front-fender" />
+                <use href="#meteor-shape-rear-fender" />
+                <use href="#meteor-shape-handlebar" />
+              </g>
+            </mask>
+
+            <clipPath id="meteor-clip-tank" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-tank" /></clipPath>
+            <clipPath id="meteor-clip-seat" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-seat" /></clipPath>
+            <clipPath id="meteor-clip-engine" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-engine" /></clipPath>
+            <clipPath id="meteor-clip-frame" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-frame" /></clipPath>
+            <clipPath id="meteor-clip-exhaust" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-exhaust" /></clipPath>
+            <clipPath id="meteor-clip-rear-wheel" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-rear-wheel" /></clipPath>
+            <clipPath id="meteor-clip-front-wheel" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-front-wheel" /></clipPath>
+            <clipPath id="meteor-clip-rear-shock" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-rear-shock" /></clipPath>
+            <clipPath id="meteor-clip-fork" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-fork" /></clipPath>
+            <clipPath id="meteor-clip-headlamp" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-headlamp" /></clipPath>
+            <clipPath id="meteor-clip-front-fender" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-front-fender" /></clipPath>
+            <clipPath id="meteor-clip-rear-fender" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-rear-fender" /></clipPath>
+            <clipPath id="meteor-clip-handlebar" clipPathUnits="userSpaceOnUse"><use href="#meteor-shape-handlebar" /></clipPath>
+          </defs>
+
+          <image
+            class="meteor-blueprint"
+            href="bike%20image.png"
+            x="0"
+            y="0"
+            width="1672"
+            height="941"
+            preserveAspectRatio="none"
+          />
+          <image
+            class="meteor-assembly"
+            href="bike%20image.png"
+            x="0"
+            y="0"
+            width="1672"
+            height="941"
+            preserveAspectRatio="none"
+            mask="url(#meteor-assembly-mask)"
+          />
+
+          <g class="meteor-parts" aria-hidden="true">
+            <g class="meteor-part" data-dx="-4" data-dy="-66">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-tank)" />
+              <g class="meteor-component-label" transform="translate(510 336)">
+                <path d="M0 0 V-35 H32" />
+                <circle cx="0" cy="0" r="2" />
+                <text x="38" y="-30">FUEL TANK</text>
+              </g>
+            </g>
+            <g class="meteor-part" data-dx="-14" data-dy="-76">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-seat)" />
+            </g>
+            <g class="meteor-part" data-dx="2" data-dy="48">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-engine)" />
+              <g class="meteor-component-label" transform="translate(530 520)">
+                <path d="M0 0 V38 H34" />
+                <circle cx="0" cy="0" r="2" />
+                <text x="40" y="43">349 CC ENGINE</text>
+              </g>
+            </g>
+            <g class="meteor-part" data-dx="-18" data-dy="37">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-frame)" />
+            </g>
+            <g class="meteor-part" data-dx="-62" data-dy="61">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-exhaust)" />
+              <g class="meteor-component-label" transform="translate(388 631)">
+                <path d="M0 0 V32 H-44" />
+                <circle cx="0" cy="0" r="2" />
+                <text x="-50" y="38" text-anchor="end">EXHAUST</text>
+              </g>
+            </g>
+            <g class="meteor-part" data-dx="-112" data-dy="12">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-rear-wheel)" />
+            </g>
+            <g class="meteor-part" data-dx="122" data-dy="14">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-front-wheel)" />
+              <g class="meteor-component-label" transform="translate(845 672)">
+                <path d="M0 0 V40 H30" />
+                <circle cx="0" cy="0" r="2" />
+                <text x="36" y="46">CAST WHEELS</text>
+              </g>
+            </g>
+            <g class="meteor-part" data-dx="-43" data-dy="39">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-rear-shock)" />
+              <g class="meteor-component-label" transform="translate(277 499)">
+                <path d="M0 0 H-48 V-30" />
+                <circle cx="0" cy="0" r="2" />
+                <text x="-54" y="-35" text-anchor="end">TWIN SHOCKS</text>
+              </g>
+            </g>
+            <g class="meteor-part" data-dx="74" data-dy="-30">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-fork)" />
+              <g class="meteor-component-label" transform="translate(716 419)">
+                <path d="M0 0 H43 V-36" />
+                <circle cx="0" cy="0" r="2" />
+                <text x="49" y="-41">FRONT FORK</text>
+              </g>
+            </g>
+            <g class="meteor-part" data-dx="112" data-dy="-68">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-headlamp)" />
+              <g class="meteor-component-label" transform="translate(716 303)">
+                <path d="M0 0 V-48 H-42" />
+                <circle cx="0" cy="0" r="2" />
+                <text x="-48" y="-53" text-anchor="end">HEADLAMP</text>
+              </g>
+            </g>
+            <g class="meteor-part" data-dx="95" data-dy="-75">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-front-fender)" />
+            </g>
+            <g class="meteor-part" data-dx="-108" data-dy="-73">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-rear-fender)" />
+            </g>
+            <g class="meteor-part" data-dx="55" data-dy="-84">
+              <image href="bike%20image.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#meteor-clip-handlebar)" />
+            </g>
+          </g>
+        </svg>
+        <ul class="meteor-mobile-labels" aria-hidden="true">
+          <li>Fuel tank</li>
+          <li>349 cc engine</li>
+          <li>Chassis</li>
+          <li>Rear shocks</li>
+          <li>Exhaust</li>
+          <li>Front fork</li>
+          <li>Wheels</li>
+          <li>Headlamp</li>
+        </ul>
+        <span class="meteor-coordinate meteor-coordinate--left" aria-hidden="true">LAT / 27° 42′ N</span>
+        <span class="meteor-coordinate meteor-coordinate--right" aria-hidden="true">MECHANICAL STUDY / 01</span>
+      </div>
+
+      <div class="meteor-controls">
+        <p class="meteor-instruction" id="meteor-instruction">Move across the motorcycle to explore its construction.</p>
+        <button class="meteor-toggle" id="meteor-toggle" type="button" aria-pressed="false">
+          <span class="meteor-toggle-indicator" aria-hidden="true"></span>
+          <span class="meteor-toggle-label">EXPLODED VIEW</span>
+          <span class="meteor-toggle-state" aria-hidden="true">+</span>
+        </button>
+        <p class="meteor-gesture-note">Drag on touch / Select to hold</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SECTION 4 — LINEUP ═══════════════ -->
+  <section id="section-lineup" aria-label="03 — The Lineup">
+    <div class="lineup-header">
+      <p class="section-label">03 — The Lineup</p>
+      <h2 class="lineup-title" id="lineup-title">
+        <span class="line-reveal"><span class="line-reveal-inner">Five ways to ride the night.</span></span>
+      </h2>
+    </div>
+    <div class="lineup-slides" id="lineup-slides" role="group" aria-labelledby="lineup-title"></div>
+  </section>
+
+  <!-- ═══════════════ SECTION 5 — RESERVE ═══════════════ -->
+  <section id="section-reserve" aria-label="Reserve your NOCTIS">
+    <h2 class="reserve-title">
+      <span class="line-reveal"><span class="line-reveal-inner">Ride the night.</span></span>
+    </h2>
+    <p class="reserve-sub">The city was never meant to be dark. You were meant to set it alight.</p>
+    <button class="reserve-btn" id="reserve-btn" type="button" aria-label="Reserve your NOCTIS">
+      <span class="reserve-btn-text">Reserve Your NOCTIS</span>
+      <span class="reserve-btn-tick" aria-hidden="true"></span>
+    </button>
+  </section>
+
+  <!-- ═══════════════ RESERVATION OVERLAY ═══════════════ -->
+  <div id="reserve-overlay" class="reserve-overlay" aria-hidden="true" inert>
+    <div class="reserve-modal" role="dialog" aria-modal="true" aria-labelledby="reserve-title" aria-describedby="reserve-endpoint-status">
+      <div class="reserve-modal-header">
+        <h2 id="reserve-title">Reserve Your NOCTIS</h2>
+        <button type="button" id="reserve-close" class="reserve-close" aria-label="Close reservation dialog">&times;</button>
+      </div>
+      <form id="reserve-form" data-endpoint="" novalidate>
+        <div class="reserve-form-grid">
+          <div class="reserve-form-group">
+            <label for="reserve-name">Name</label>
+            <input type="text" id="reserve-name" name="name" required placeholder="John Smith" aria-describedby="name-error" />
+            <span class="error-message" id="name-error">Please enter your name.</span>
+          </div>
+          <div class="reserve-form-group">
+            <label for="reserve-email">Email</label>
+            <input type="email" id="reserve-email" name="email" required placeholder="john@example.com" aria-describedby="email-error" />
+            <span class="error-message" id="email-error">Please enter a valid email.</span>
+          </div>
+          <div class="reserve-form-group">
+            <label for="reserve-contact">Phone</label>
+            <input type="tel" id="reserve-contact" name="contact" placeholder="+1 555 123 4567" />
+          </div>
+          <div class="reserve-form-group">
+            <label for="reserve-model">Preferred Model</label>
+            <select id="reserve-model" name="model">
+              <option value="meteor-350">Meteor 350 — The urban grand tourer</option>
+              <option value="s">S — Pure street commuter</option>
+              <option value="x">X — All-terrain dual-sport</option>
+              <option value="r">R — Built for the track</option>
+              <option value="one">ONE — The future, early</option>
+            </select>
+          </div>
+          <div class="reserve-form-group">
+            <label for="reserve-message">Message (optional)</label>
+            <textarea id="reserve-message" name="message" rows="4" placeholder="Tell us about your ride…"></textarea>
+          </div>
+        </div>
+        <div class="reserve-form-actions">
+          <button type="button" id="reserve-cancel" class="reserve-btn secondary">Cancel</button>
+          <button type="submit" id="reserve-submit" class="reserve-btn primary" disabled>Send inquiry</button>
+        </div>
+        <p class="reserve-setup-note">
+          <span id="reserve-endpoint-status" role="status" aria-live="polite"></span>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer id="footer" aria-label="NOCTIS footer">
+    <div>
+      <a href="#section-hero" class="footer-wordmark" aria-label="NOCTIS home">NOCTIS</a>
+      <span class="footer-copy">© 2026 NOCTIS. Fictional brand.</span>
+    </div>
+    <nav aria-label="Models">
+      <p class="footer-col-title">Models</p>
+      <ul class="footer-links">
+        <li><a href="#section-lineup">Meteor 350</a></li>
+        <li><a href="#section-lineup">S</a></li>
+        <li><a href="#section-lineup">X</a></li>
+        <li><a href="#section-lineup">R</a></li>
+        <li><a href="#section-lineup">ONE</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Technology">
+      <p class="footer-col-title">Technology</p>
+      <ul class="footer-links">
+        <li><a href="#section-dismantle">Architecture</a></li>
+        <li><a href="#section-dismantle">Powertrain</a></li>
+        <li><a href="#section-dismantle">Illumination</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Company">
+      <p class="footer-col-title">Company</p>
+      <ul class="footer-links">
+        <li><a href="#section-reserve">Reserve</a></li>
+        <li><a href="#section-hero">About</a></li>
+        <li><a href="#section-hero">Press</a></li>
+        <li><a href="#section-hero">Careers</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
